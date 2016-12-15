@@ -1,61 +1,34 @@
 <?php 
 	session_start();
-	error_reporting(E_ERROR | E_WARNING | E_PARSE); 
-	class model_db{
-		private $server,
-				$port,
-				$user,
-				$password,
-				$db,
-				$sql,
-				$result,
-				$con;
+	error_reporting(E_ERROR | E_WARNING | E_PARSE);
+	
+	require_once("../config/db.php");
 
-		private function connect(){
-			$this->server = "localhost";
-			$this->port = "";
-			$this->user = "root";
-			$this->password = "123456";
-			$this->db = "petter";
-			$this->result = null;
-			$this->con = mysql_connect($this->server, $this->user, $this->password) or die ("Error al Conectar al Servidor ".mysql_error());
+	$data = $db['database'];
 
-			mysql_select_db($this->db, $this->con) or die ("Error al Conectar a la Base de Datos ".mysql_error());
+	if(isset($data['conector']) and !empty($data['conector'])){
+		switch ($data["contector"]) {
+			case 'mysql':
+				$file = "../conectors/mysql.php";
+				if(file_exists($file)){
+					require_once($file);
+				}else{
+					print "This file from Conector not Exists";
+				}
+			break;
+			case 'postgres':
+				$file = "../conectors/postgres.php";
+				if(file_exists($file)){
+					require_once($file);
+				}else{
+					print "This file from Conector not Exists";
+				}
+			break;
+			default:
+				print "<h1>Not Exists Support from This Conector</h1>";
+			break;
 		}
-
-		protected function execute($sql){
-			$this->connect();
-			$this->result = mysql_query($sql, $this->con) or die ("Error al Realizar la Consulta ".mysql_error());
-			return mysql_affected_rows();
-		}
-
-		protected function getdata(){
-			return mysql_fetch_array($this->result);
-		}
-
-		protected function transaction($t){
-			$t = strtolower($t);
-			$sql = "";
-			switch ($sql) {
-				case 'begin':
-					$sql = "BEGIN";
-				break;
-				case 'commit':
-					$sql = "COMMIT";
-				break;
-				case 'roolback':
-					$sql = 'ROOLBACK';
-				break;
-			}
-			return $this->execute($sql);
-		}
-
-		protected function free_result(){
-			mysql_free_result($this->result);
-		}
-
-		protected function close(){
-			mysql_close($this->con);
-		}
+	}else{
+		print "<h1>Error to Search the Conector file, see the config db</h1>";
 	}
 ?>

@@ -52,5 +52,3 @@ insert into pt_field (field_id,window_id,column_id,field_type_id,list_id,query_i
 	values (1,1,1,2,0,0,0,'ID',0,1,'N','');
 insert into pt_field (field_id,window_id,column_id,field_type_id,list_id,query_id,field_parent_id,name,default_value,position,isrequired,rule)
 	values (2,1,2,1,0,0,0,'NOMBRE: ','',2,'Y','');
-
-
