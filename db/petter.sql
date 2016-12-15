@@ -26,7 +26,7 @@ create table pt_query(
 	query_id int auto_increment not null,
 	created timestamp not null default current_timestamp,
 	updated timestamp null,
-	sql text,
+	querystring text,
 	value varchar(60) not null,
 	showname varchar(60) not null,
 	isactive char(1) not null default 'Y',
