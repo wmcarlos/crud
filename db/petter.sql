@@ -112,6 +112,7 @@ create table pt_field(
 	created timestamp not null default current_timestamp,
 	updated timestamp null,
 	name varchar(60) not null,
+	default_value varchar(60) null,
 	position int not null default 1,
 	isrequired char(1) not null default 'N',
 	rule text,
@@ -121,6 +122,5 @@ create table pt_field(
 	constraint fk_column_id foreign key (column_id) references pt_column (column_id) on update cascade on delete restrict,
 	constraint fk_field_type_id foreign key (field_type_id) references pt_field_type (field_type_id) on update cascade on delete restrict,
 	constraint fk_list_id foreign key (list_id) references pt_list (list_id) on update cascade on delete restrict,
-	constraint fk_query_id foreign key (query_id) references pt_query (query_id) on update cascade on delete restrict,
-	constraint fk_field_parent_id foreign key (field_parent_id) references pt_field (field_id) on update cascade on delete restrict
+	constraint fk_query_id foreign key (query_id) references pt_query (query_id) on update cascade on delete restrict
 )engine = InnoDB;
